@@ -29,7 +29,7 @@ class ScoreboardView(QWidget):
         
         # --- Fonts ---
         score_font = QFont("Arial", 140, QFont.Weight.Bold)
-        timer_font = QFont("Courier", 120, QFont.Weight.Bold)
+        timer_font = QFont("Arial", 120, QFont.Weight.Bold)
         
         # --- Widgets ---
         # 1. Top Status Bar
@@ -101,10 +101,20 @@ class ScoreboardView(QWidget):
         elif key == Qt.Key.Key_Left:
             self.left_score += 1
             self.left_label.setText(str(self.left_score))
+
+        # DECREMENT LEFT SCORE (UP Arrow)
+        elif key == Qt.Key.Key_Up:
+            self.left_score -= 1
+            self.left_label.setText(str(self.left_score))
         
         # INCREMENT RIGHT SCORE (Right Arrow)
         elif key == Qt.Key.Key_Right:
             self.right_score += 1
+            self.right_label.setText(str(self.right_score))
+
+        # DECREMENT RIGHT SCORE (Down Arrow)
+        elif key == Qt.Key.Key_Down:
+            self.right_score -= 1
             self.right_label.setText(str(self.right_score))
         
         # FRIMB RED TOUCH ('R') - Hardware Simulation
