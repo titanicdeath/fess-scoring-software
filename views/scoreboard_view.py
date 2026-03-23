@@ -10,13 +10,13 @@ class ScoreboardView(QWidget):
         super().__init__()
         
         
-        # --- Temporary state for testing (Will move to BoutController later) ---
+        # --- Temporary state for testing (move to BoutController later) ---
         self.left_score = 0
         self.right_score = 0
 
         self.init_ui()
         
-        # Initialize our highly accurate timer
+        # Initialize timer
         self.timer = BoutTimer()
         self.timer.time_updated.connect(self.update_timer_display)
         self.timer.set_time(3 * 60 * 1000) # Set to 3:00 minutes (in milliseconds)        
@@ -48,7 +48,6 @@ class ScoreboardView(QWidget):
         self.timer_label = QLabel("03:00.0")
         self.timer_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.timer_label.setFont(timer_font)
-        #print(self.timer_label)
         
         # 4. Right Score (Green)
         self.right_label = QLabel(str(self.right_score))
@@ -85,7 +84,7 @@ class ScoreboardView(QWidget):
         self.timer_label.setText(time_str)
 
     def keyPressEvent(self, event: QKeyEvent):
-        """Temporary hardware/keyboard bindings test for Phase 1."""
+        # TEMPORARY hardware/keyboard bindings for testing
         key = event.key()
         
         # START / PAUSE (Spacebar)
@@ -104,8 +103,9 @@ class ScoreboardView(QWidget):
 
         # DECREMENT LEFT SCORE (UP Arrow)
         elif key == Qt.Key.Key_Up:
-            self.left_score -= 1
-            self.left_label.setText(str(self.left_score))
+            if (self.left_score != 0):
+                self.left_score -= 1
+                self.left_label.setText(str(self.left_score))
         
         # INCREMENT RIGHT SCORE (Right Arrow)
         elif key == Qt.Key.Key_Right:
@@ -114,8 +114,9 @@ class ScoreboardView(QWidget):
 
         # DECREMENT RIGHT SCORE (Down Arrow)
         elif key == Qt.Key.Key_Down:
-            self.right_score -= 1
-            self.right_label.setText(str(self.right_score))
+            if (self.right_score != 0):
+                self.right_score -= 1
+                self.right_label.setText(str(self.right_score))
         
         # FRIMB RED TOUCH ('R') - Hardware Simulation
         elif key == Qt.Key.Key_R:

@@ -23,15 +23,15 @@ class BoutTimer(QObject):
         self.is_running = False
 
     def set_time(self, duration_ms: int):
-        # Sets the timer to a specific duration without starting it
+        # Set the timer duration w/o starting it
         self.snapshot_remaining = duration_ms
         self.remaining_ms = duration_ms
         self.is_running = False
         self.time_updated.emit(self.remaining_ms)
 
     def start(self, duration_ms: int = None):
-        # Starts the timer
-        # If duration_ms is provided, resets to that duration
+        # Start timer
+        # If duration_ms is provided, reset to that duration
         if duration_ms is not None:
             self.snapshot_remaining = duration_ms
         else:
@@ -55,13 +55,13 @@ class BoutTimer(QObject):
         self.time_updated.emit(self.remaining_ms)
 
     def resume(self):
-        # Resumes the timer from the paused state
+        # Resume timer from the paused state
         if self.is_running or self.remaining_ms <= 0:
             return
         self.start()
 
     def _current_remaining(self) -> int:
-        # Calculates the exact remaining time
+        # Calculate the exact remaining time
         if not self.is_running:
             return self.remaining_ms
         return max(0, self.snapshot_remaining - self.elapsed.elapsed())

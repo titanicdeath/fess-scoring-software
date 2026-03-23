@@ -10,10 +10,10 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("FESS Digital Scoring Interface")
         self.resize(1024, 600)
         
-        # Apply a sleek dark theme globally to the window
+        # Apply a dark theme globally to the window
         self.setStyleSheet("background-color: #121212; color: #FFFFFF;")
         
-        # Instantiate and set our ScoreboardView as the main content
+        # Instantiate and set ScoreboardView as main content
         self.scoreboard = ScoreboardView()
         self.setCentralWidget(self.scoreboard)
 

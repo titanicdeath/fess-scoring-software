@@ -17,7 +17,7 @@ COLOR_LEFT_RED = "#E24B4A"
 COLOR_RIGHT_GREEN = "#1D9E75"
 
 # --- Default Configurations ---
-# Matches the JSON schema specified in SDD Section 10.2
+# JSON schema 
 DEFAULT_CONFIG = {
     "keybindings": {
         "keyboard": {
