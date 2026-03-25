@@ -2,6 +2,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
 from views.scoreboard_view import ScoreboardView
+from views.main_menu import MainMenu
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -18,8 +19,17 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.scoreboard)
 
 if __name__ == "__main__":
+
+    test = QApplication(sys.argv)
+    window = MainMenu()
+    window.show()
+    test.exec()
+
     # Create the Qt Application
+    
+
     app = QApplication(sys.argv)
+    
     
     # Create and show the main window
     window = MainWindow()

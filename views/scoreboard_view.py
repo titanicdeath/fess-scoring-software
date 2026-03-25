@@ -54,7 +54,7 @@ class ScoreboardView(QWidget):
         self.right_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.right_label.setFont(score_font)
         self.right_label.setStyleSheet(f"color: {COLOR_RIGHT_GREEN};")
-        
+         
         # --- Assembly ---
         score_layout.addWidget(self.left_label)
         score_layout.addWidget(self.timer_label, stretch=1)
