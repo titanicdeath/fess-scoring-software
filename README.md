@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logos/Back-logo.png" alt="FESS Logo" width="220">
+</p>
+
 # FESS Digital Scoring Interface
 
 A Python + PyQt6 desktop application for a modern fencing scoring system.
