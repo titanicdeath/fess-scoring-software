@@ -1,39 +1,39 @@
-# Entry point for FESS Scoring Software
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from views.scoreboard_view import ScoreboardView
 from views.main_menu import MainMenu
+
+
+
+APP_STYLESHEET = """
+QWidget {
+    background-color: #0B1118;
+    color: #EAF0F7;
+    font-family: "Segoe UI";
+}
+QToolTip {
+    background-color: #121A23;
+    color: #EAF0F7;
+    border: 1px solid #263545;
+    padding: 6px;
+}
+"""
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        
         self.setWindowTitle("FESS Digital Scoring Interface")
-        self.resize(1024, 600)
-        
-        # Apply a dark theme globally to the window
-        self.setStyleSheet("background-color: #121212; color: #FFFFFF;")
-        
-        # Instantiate and set ScoreboardView as main content
-        self.scoreboard = ScoreboardView()
-        self.setCentralWidget(self.scoreboard)
+        self.resize(1440, 900)
+        self.setMinimumSize(1100, 700)
+        self.setCentralWidget(MainMenu())
+
 
 if __name__ == "__main__":
-
-    test = QApplication(sys.argv)
-    window = MainMenu()
-    window.show()
-    test.exec()
-
-    # Create the Qt Application
-    
-
     app = QApplication(sys.argv)
-    
-    
-    # Create and show the main window
+    app.setStyle("Fusion")
+    app.setStyleSheet(APP_STYLESHEET)
+
     window = MainWindow()
     window.show()
-    
-    # Start the event loop
+
     sys.exit(app.exec())
