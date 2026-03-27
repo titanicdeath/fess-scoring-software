@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logos/Back-logo.png" alt="FESS Logo" width="550">
+  <img src="assets/logos/Back-logo.png" alt="FESS Logo" width="350">
 </p>
 
 # FESS Digital Scoring Interface
