@@ -10,7 +10,7 @@ This project is being developed in connection with the **Foil Épée Saber Socie
 
 This repository is being developed by **Alden Simmons**, President of the FESS Fencing Club and a Computer Science student at Tennessee Tech University. 
 
-The project combines club needs with software development, with the goal of building a cleaner and more useful digital scoring interface for fencing. Without payying for overpriced software and hardware.
+The project combines club needs with software development, with the goal of building a clean and useful digital scoring interface for fencing. Without paying for overpriced software and hardware.
 
 ## FRIMB
 
