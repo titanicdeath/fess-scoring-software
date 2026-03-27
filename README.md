@@ -8,9 +8,9 @@ The project combines club needs with software development, with the goal of buil
 
 ## FRIMB
 
-This project is also intended to work alongside the **FESS Repeater Intercept Module Bridge (FRIMB)**, a custom hardware interface designed to connect fencing scoring machine repeater outputs to a computer-readable input system.
+This project is also intended to work alongside the **FESS Repeater Intercept Module Bridge (FRIMB)**. Which is a custom hardware interface I designed and built to connect fencing scoring machine repeater outputs to a computer-readable input system. Otherwise, if I plugged my laptop into the SG-11 it would have fried my laptop, not optimal.
 
-The purpose of FRIMB is to help bridge external scoring hardware with software control and display logic, allowing the digital interface to react to real scoring events and support future hardware-integrated workflows.
+The purpose of FRIMB is to help bridge external scoring hardware with a computer so that software control and display logic could be made, thus allowing the digital interface to react to real scoring events.
 
 ## Current Focus
 
