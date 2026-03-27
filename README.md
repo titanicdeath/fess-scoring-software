@@ -3,7 +3,9 @@
 A Python + PyQt6 desktop application for a modern fencing scoring system.
 
 This project is being developed in connection with the **Foil Épée Saber Society (FESS) Fencing Club** at **Tennessee Tech University**. 
+
 This repository is being developed by **Alden Simmons**, President of the FESS Fencing Club and a Computer Science student at Tennessee Tech University. 
+
 The project combines club needs with software development, with the goal of building a cleaner and more useful digital scoring interface for fencing. Without payying for overpriced software and hardware.
 
 ## FRIMB
