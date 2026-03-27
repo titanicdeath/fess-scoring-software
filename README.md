@@ -21,7 +21,7 @@ The purpose of FRIMB is to help bridge external scoring hardware with a computer
 ## MVP Established
 The first iteration of this project was a minimal viable product. A visual interface that took simple inputs from a wireless game controller to change the score, start/stop the time. The FRIMB also reliably working to relay a touch to the Arduino that simulated a key stroke to stop the timer.
 
-The hardware side of this project is already built. The **FRIMB** hardware interface is intended to let a connected fencing weapon or scoring signal behave like a keyboard input for testing and software integration. Right now, the software side is using direct keyboard mappings as a temporary stand-in, so a live hardware signal would effectively simulate the same keystroke behavior. :contentReference[oaicite:0]{index=0}
+The hardware side of this project is already built. The **FRIMB** hardware interface is intended to let a connected fencing weapon or scoring signal behave like a keyboard input for testing and software integration. Right now, the software side is using direct keyboard mappings as a temporary stand-in, so a live hardware signal would effectively simulate the same keystroke behavior.
 
 ### Current Test Key Mappings
 
