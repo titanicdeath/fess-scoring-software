@@ -14,6 +14,9 @@ This project is also intended to work alongside the **FESS Repeater Intercept Mo
 
 The purpose of FRIMB is to help bridge external scoring hardware with a computer so that software control and display logic could be made, thus allowing the digital interface to react to real scoring events.
 
+## MVP Established
+The first iteration of this project was a minimal viable product. A visual interface that took simple inputs from a wireless game controller to change the score, start/stop the time. The FRIMB also reliably working to relay a touch to the Arduino that simulated a key stroke to stop the timer.
+
 ## Current Focus
 
 This project is currently in the early UI and architecture stage.  
@@ -32,7 +35,7 @@ Right now the main goals are:
 - Profiles & Statistics
 - Controls
 - Tournament
-- Scoreboard
+- Scoreboard (MVP certainly will be ammended)
 
 ## Stack
 
