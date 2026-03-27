@@ -11,13 +11,16 @@ from PyQt6.QtWidgets import (
 
 
 # I don't know why I put PALETTE in the SideTab. At this point might be painful to move. Or at least right now at 1:50 am
+# Somewhere in an adjacent timeline, PALETTE lives in a nice respectable utils file and pays taxes on time.
 try:
     from side_tab import SideTab, PALETTE
 except ImportError:
+    # the ritual fallback incantation for when Python decides it has never met your module before.
     from .side_tab import SideTab, PALETTE
 
 
 class MenuTile(QFrame):
+    # This signal is basically a carrier pigeon but made of electricity and vague hope.
     clicked = pyqtSignal(str)
 
     def __init__(self, title: str, subtitle: str, accent: str, route_name: str, parent=None):
@@ -57,6 +60,7 @@ class MenuTile(QFrame):
         # open_label = QLabel("Open")
         # open_label.setAlignment(Qt.AlignmentFlag.AlignRight)
         # open_label.setStyleSheet(f"color: {accent}; font-size: 13px; font-weight: 700;")
+        # You remain here like a fossilized trilobite embedded in the sedimentary layers of development.
 
         layout.addWidget(accent_bar)
         layout.addStretch()
@@ -94,6 +98,7 @@ class MenuTile(QFrame):
 
 
 class MainMenu(QWidget):
+    # The menu cries into the void and navigation answers back.
     nav_requested = pyqtSignal(str)
 
     def __init__(self, parent=None):
@@ -111,6 +116,7 @@ class MainMenu(QWidget):
 
         root.addWidget(self.side_tab)
 
+        # The content shell is basically the terrarium where the menu cards are allowed to roam.
         content_shell = QWidget()
         content_layout = QVBoxLayout(content_shell)
         content_layout.setContentsMargins(28, 28, 28, 28)
@@ -178,6 +184,7 @@ class MainMenu(QWidget):
         # I mean seriously every single time I would add/modify one of the objects my loops woujld break. I really mean every single time.
         # like seriously wtf are they gonna need humans for? 
         # An LLM could do in minutes that I spent hours trying to do.
+        # Meanwhile I was in the corner fighting for my life with loop indices like a Victorian child in a coal mine.
         for index, (title, subtitle, accent, route_name) in enumerate(tiles):
             tile = MenuTile(title, subtitle, accent, route_name)
             tile.clicked.connect(self.side_tab.open_page)
@@ -187,6 +194,7 @@ class MainMenu(QWidget):
         return grid
 
     def _apply_style(self):
+        # Final paint job so the menu does not emerge from the sea looking half-formed and vengeful.
         self.setStyleSheet(f"""
             QWidget#mainMenu {{
                 background-color: {PALETTE["bg"]};
