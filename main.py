@@ -3,7 +3,6 @@ from PyQt6.QtWidgets import QApplication, QMainWindow
 from views.main_menu import MainMenu
 
 
-
 APP_STYLESHEET = """
 QWidget {
     background-color: #0B1118;

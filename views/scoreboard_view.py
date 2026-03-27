@@ -1,18 +1,25 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QKeyEvent, QFont
 from models.bout import BoutTimer
 
 from config import COLOR_LEFT_RED, COLOR_RIGHT_GREEN
 
 class ScoreboardView(QWidget):
-    def __init__(self):
+    def __init__(self, mode="directeur"):
         super().__init__()
         
         
         # --- Temporary state for testing (move to BoutController later) ---
         self.left_score = 0
         self.right_score = 0
+        self.mode = mode
+
+        # Temp auto timer
+        self.auto_resume_timer = QTimer(self)
+        self.auto_resume_timer.setSingleShot(True)
+        self.auto_resume_timer.timeout.connect(self._resume_after_auto_halt)
+
 
         self.init_ui()
         
@@ -28,8 +35,8 @@ class ScoreboardView(QWidget):
         score_layout = QHBoxLayout()
         
         # --- Fonts ---
-        score_font = QFont("Arial", 140, QFont.Weight.Bold)
-        timer_font = QFont("Arial", 120, QFont.Weight.Bold)
+        score_font = QFont("Segoe UI", 140, QFont.Weight.Bold)
+        timer_font = QFont("Segoe UI", 120, QFont.Weight.Bold)
         
         # --- Widgets ---
         # 1. Top Status Bar
@@ -65,7 +72,7 @@ class ScoreboardView(QWidget):
         
         self.setLayout(main_layout)
         
-        # Allows this specific widget to capture keystrokes
+        # Allows this widget to capture keystrokes
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
     def update_timer_display(self, ms: int):
@@ -84,6 +91,66 @@ class ScoreboardView(QWidget):
         self.timer_label.setText(time_str)
 
     def keyPressEvent(self, event: QKeyEvent):
+        if self.mode == "automatic":
+            self.tempAutoScore(event)
+        else:
+            # TEMPORARY hardware/keyboard bindings for testing
+            key = event.key()
+            
+            # START / PAUSE (Spacebar)
+            if key == Qt.Key.Key_Space:
+                if self.timer.is_running:
+                    self.timer.pause()
+                    self.status_label.setText("PAUSED (Press Space to Resume)")
+                else:
+                    self.timer.resume()
+                    self.status_label.setText("RUNNING - Allez!")
+            
+            # INCREMENT LEFT SCORE (Left Arrow)
+            elif key == Qt.Key.Key_Left:
+                self.left_score += 1
+                self.left_label.setText(str(self.left_score))
+
+            # DECREMENT LEFT SCORE (UP Arrow)
+            elif key == Qt.Key.Key_Up:
+                if (self.left_score != 0):
+                    self.left_score -= 1
+                    self.left_label.setText(str(self.left_score))
+            
+            # INCREMENT RIGHT SCORE (Right Arrow)
+            elif key == Qt.Key.Key_Right:
+                self.right_score += 1
+                self.right_label.setText(str(self.right_score))
+
+            # DECREMENT RIGHT SCORE (Down Arrow)
+            elif key == Qt.Key.Key_Down:
+                if (self.right_score != 0):
+                    self.right_score -= 1
+                    self.right_label.setText(str(self.right_score))
+            
+            # FRIMB RED TOUCH ('R') - Hardware Simulation
+            elif key == Qt.Key.Key_R:
+                if self.timer.is_running:
+                    self.timer.pause()
+                    self.status_label.setText("HALT - RED TOUCH DETECTED")
+            
+            # FRIMB GREEN TOUCH ('G') - Hardware Simulation
+            elif key == Qt.Key.Key_G:
+                if self.timer.is_running:
+                    self.timer.pause()
+                    self.status_label.setText("HALT - GREEN TOUCH DETECTED")
+                    
+            # RESET BOUT TEST (Backspace)
+            elif key == Qt.Key.Key_Backspace:
+                self.timer.set_time(3 * 60 * 1000)
+                self.left_score = 0
+                self.right_score = 0
+                self.left_label.setText("0")
+                self.right_label.setText("0")
+                self.status_label.setText("READY (Press Space to Start)")
+
+    
+    def tempAutoScore(self, event: QKeyEvent):
         # TEMPORARY hardware/keyboard bindings for testing
         key = event.key()
         
@@ -91,6 +158,7 @@ class ScoreboardView(QWidget):
         if key == Qt.Key.Key_Space:
             if self.timer.is_running:
                 self.timer.pause()
+                self.auto_resume_timer.stop()
                 self.status_label.setText("PAUSED (Press Space to Resume)")
             else:
                 self.timer.resume()
@@ -118,23 +186,36 @@ class ScoreboardView(QWidget):
                 self.right_score -= 1
                 self.right_label.setText(str(self.right_score))
         
+        
         # FRIMB RED TOUCH ('R') - Hardware Simulation
         elif key == Qt.Key.Key_R:
             if self.timer.is_running:
                 self.timer.pause()
+                self.left_score += 1
+                self.left_label.setText(str(self.left_score))
                 self.status_label.setText("HALT - RED TOUCH DETECTED")
+                self.auto_resume_timer.start(5000)
         
         # FRIMB GREEN TOUCH ('G') - Hardware Simulation
         elif key == Qt.Key.Key_G:
             if self.timer.is_running:
                 self.timer.pause()
+                self.right_score += 1
+                self.right_label.setText(str(self.right_score))
                 self.status_label.setText("HALT - GREEN TOUCH DETECTED")
+                self.auto_resume_timer.start(5000)
                 
         # RESET BOUT TEST (Backspace)
         elif key == Qt.Key.Key_Backspace:
+            self.auto_resume_timer.stop()
             self.timer.set_time(3 * 60 * 1000)
             self.left_score = 0
             self.right_score = 0
             self.left_label.setText("0")
             self.right_label.setText("0")
             self.status_label.setText("READY (Press Space to Start)")
+
+    def _resume_after_auto_halt(self):
+        if not self.timer.is_running and self.timer.remaining_ms > 0:
+            self.timer.resume()
+            self.status_label.setText("RUNNING - Allez!")

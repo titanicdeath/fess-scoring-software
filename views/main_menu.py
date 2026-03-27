@@ -9,6 +9,8 @@ from PyQt6.QtWidgets import (
     QSizePolicy,
 )
 
+
+# I don't know why I put PALETTE in the SideTab. At this point might be painful to move. Or at least right now at 1:50 am
 try:
     from side_tab import SideTab, PALETTE
 except ImportError:
@@ -35,29 +37,33 @@ class MenuTile(QFrame):
         layout.setContentsMargins(20, 20, 20, 20)
         layout.setSpacing(12)
 
+        # Creates the border/outline of the menu tiles.
         accent_bar = QFrame()
         accent_bar.setFixedHeight(6)
         accent_bar.setStyleSheet(f"background-color: {accent}; border: none; border-radius: 3px;")
 
+        # Creates and formats the text for the title of the respective card (i.g. Combat Modes)
         title_label = QLabel(title)
         title_label.setStyleSheet(f"color: {PALETTE['text']}; font-size: 28px; font-weight: 750;")
         title_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
+        # Creates and formats essentially a short description of the tile.
         subtitle_label = QLabel(subtitle)
         subtitle_label.setWordWrap(True)
         subtitle_label.setStyleSheet(f"color: {PALETTE['muted']}; font-size: 15px;")
         subtitle_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
 
-        open_label = QLabel("Open")
-        open_label.setAlignment(Qt.AlignmentFlag.AlignRight)
-        open_label.setStyleSheet(f"color: {accent}; font-size: 13px; font-weight: 700;")
+        # Not sure if you are needed
+        # open_label = QLabel("Open")
+        # open_label.setAlignment(Qt.AlignmentFlag.AlignRight)
+        # open_label.setStyleSheet(f"color: {accent}; font-size: 13px; font-weight: 700;")
 
         layout.addWidget(accent_bar)
         layout.addStretch()
         layout.addWidget(title_label)
         layout.addWidget(subtitle_label)
         layout.addStretch()
-        layout.addWidget(open_label)
+        # layout.addWidget(open_label)
 
         self._refresh_style()
 
@@ -102,8 +108,6 @@ class MainMenu(QWidget):
         root.setSpacing(0)
 
         self.side_tab = SideTab()
-        self.side_tab.nav_requested.connect(self._handle_nav_request)
-        self.side_tab.set_active_route("home")
 
         root.addWidget(self.side_tab)
 
@@ -120,9 +124,11 @@ class MainMenu(QWidget):
 
         root.addWidget(content_shell, 1)
 
+    # Title Card Function
+    # Function for creating the title card centered at the top of the screen on the main menu
     def _build_card(self):
         card = QFrame()
-        card.setObjectName("heroCard")
+        card.setObjectName("card")
 
         layout = QVBoxLayout(card)
         layout.setContentsMargins(24, 24, 24, 24)
@@ -130,6 +136,7 @@ class MainMenu(QWidget):
 
         title = QLabel("FESS Digital Scoring Interface")
         title.setStyleSheet(f"color: {PALETTE['text']}; font-size: 34px; font-weight: 800;")
+        title.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         layout.addWidget(title)
 
         return card
@@ -141,13 +148,13 @@ class MainMenu(QWidget):
 
         tiles = [
             (
-                "Combat modes",
+                "Combat Modes",
                 "Select preset modes and launch a bout.",
                 PALETTE["red"],
                 "combat",
             ),
             (
-                "Profiles & stats",
+                "Profiles & Stats",
                 "View, compare, and create fencer profiles.",
                 PALETTE["green"],
                 "profiles",
@@ -167,28 +174,24 @@ class MainMenu(QWidget):
         ]
 
         # Thank you ChatGPT. 
-        # I got no clue how the fuck you were able to condense my monstrosity of loops that took up 38 lines into only 5 lines. 
+        # I got no clue how the you were able to condense my monstrosity of loops that took up 38 lines into only 5 lines. I could not even articulate what the hell it was supposed to do.
         # I mean seriously every single time I would add/modify one of the objects my loops woujld break. I really mean every single time.
         # like seriously wtf are they gonna need humans for? 
-        # An LLM could do in minutes that I spent three days trying to understand.
+        # An LLM could do in minutes that I spent hours trying to do.
         for index, (title, subtitle, accent, route_name) in enumerate(tiles):
             tile = MenuTile(title, subtitle, accent, route_name)
-            tile.clicked.connect(self._handle_nav_request)
+            tile.clicked.connect(self.side_tab.open_page)
             row, col = divmod(index, 2)
             grid.addWidget(tile, row, col)
 
         return grid
-
-    def _handle_nav_request(self, route_name: str):
-        self.side_tab.set_active_route(route_name)
-        self.nav_requested.emit(route_name)
 
     def _apply_style(self):
         self.setStyleSheet(f"""
             QWidget#mainMenu {{
                 background-color: {PALETTE["bg"]};
             }}
-            QFrame#heroCard {{
+            QFrame#card {{
                 background-color: {PALETTE["surface"]};
                 border: 1px solid {PALETTE["border"]};
                 border-radius: 22px;
